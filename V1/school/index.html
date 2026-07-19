@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>آموزشگاه زبان  </title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@3.6.0/dist/full.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #1e3a8a, #dc2626);
+      background-size: 300% 300%;
+      animation: gradientMove 15s ease infinite;
+      font-family: 'Vazirmatn', sans-serif;
+    }
+
+    @keyframes gradientMove {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .glass {
+      backdrop-filter: blur(16px) saturate(180%);
+      background-color: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-animated {
+      @apply transition duration-300 ease-in-out transform rounded-lg text-white shadow-md;
+      background-image: linear-gradient(135deg, rgba(59, 130, 246, 0.6), rgba(239, 68, 68, 0.6));
+    }
+
+    .btn-animated:hover {
+      transform: scale(1.03);
+      filter: brightness(1.15);
+    }
+
+    .fade-in {
+      animation: fadeIn 1s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .blink {
+      animation: blink 3s step-start 0s infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center px-4 py-10" oncontextmenu="return false;">
+  <div class="w-full max-w-md p-5 rounded-xl glass fade-in space-y-5">
+    <p class="text-lg text-white text-center blink">
+      برای استفاده از هر موضوع روی آن کلیک کنید
+    </p>
+
+    <!-- شعبات -->
+    <div class="space-y-2">
+      <button id="toggleBtn" class="btn w-full btn-animated">
+        آموزشگاه های زبان  <i class="fas fa-caret-down"></i>
+      </button>
+      <div id="dropdownContent" class="hidden space-y-2 pl-2">
+        <a href="#" class="btn w-full btn-animated">
+          <i class="fas fa-map-marker-alt"></i> شعبه 
+        </a>
+        <a href="#" class="btn w-full btn-animated">
+          <i class="fas fa-map-marker-alt"></i> شعبه 
+        </a>
+      </div>
+    </div>
+
+    <!-- ویدیو معرفی -->
+    <video controls class="w-full rounded-lg shadow-md mt-4" poster="thumbnail.jpg">
+      <source src="intro.mp4" type="video/mp4">
+      مرورگر شما از پخش ویدیو پشتیبانی نمی‌کند.
+    </video>
+
+    <!-- ویدیو ویژه -->
+    <a href="learn.mp4" download class="btn btn-animated w-full mt-4">
+      <i class="fas fa-video"></i> ویژه کلاس اول تا ششم
+    </a>
+
+    <!-- نمونه سوالات پایه ها -->
+    <div class="collapse collapse-arrow bg-white/10 text-white mt-5 open">
+      <input type="checkbox" checked />
+      <div class="collapse-title font-bold flex items-center gap-2">
+        <i class="fas fa-question-circle"></i> نمونه سوالات زبان و عربی
+      </div>
+      <div class="collapse-content space-y-3">
+        <div class="grid grid-cols-2 gap-3" id="questions"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- مودال نمایش PDF -->
+  <dialog id="pdfModal" class="modal">
+    <div class="modal-box w-11/12 max-w-5xl h-[90vh] bg-white">
+      <h3 id="pdfTitle" class="font-bold text-lg text-center text-gray-800 mb-4">مشاهده فایل</h3>
+      <iframe id="pdfFrame" class="w-full h-[70vh] rounded-lg" frameborder="0"></iframe>
+      <div class="flex justify-between items-center mt-4">
+        <a id="downloadLink" class="btn btn-sm btn-primary text-white" download>
+          <i class="fas fa-download"></i> دانلود فایل
+        </a>
+        <form method="dialog">
+          <button class="btn btn-sm">بستن</button>
+        </form>
+      </div>
+    </div>
+  </dialog>
+
+  <script>
+    document.getElementById('toggleBtn').addEventListener('click', () => {
+      document.getElementById('dropdownContent').classList.toggle('hidden');
+    });
+
+    function showPDF(src, title) {
+      document.getElementById('pdfFrame').src = src;
+      document.getElementById('pdfTitle').textContent = "مشاهده " + title;
+      document.getElementById('downloadLink').href = src;
+      document.getElementById('downloadLink').setAttribute("download", src);
+      document.getElementById('pdfModal').showModal();
+    }
+
+    const questionsDiv = document.getElementById('questions');
+    const grades = ['هفتم', 'هشتم', 'نهم', 'دهم', 'یازدهم', 'دوازدهم'];
+
+    grades.forEach((grade, i) => {
+      const num = i + 7; // پایه‌ها از 7 تا 12
+
+      // زبان
+      const langBtn = document.createElement('button');
+      langBtn.innerHTML = `<i class="fas fa-language"></i> زبان ${grade}`;
+      langBtn.className = "btn btn-animated w-full";
+      langBtn.onclick = () => showPDF(`zaban${num}.pdf`, `زبان پایه ${grade}`);
+      questionsDiv.appendChild(langBtn);
+
+      // عربی
+      const arabicBtn = document.createElement('button');
+      arabicBtn.innerHTML = `<i class="fas fa-book-open"></i> عربی ${grade}`;
+      arabicBtn.className = "btn btn-animated w-full";
+      arabicBtn.onclick = () => showPDF(`arabi${num}.pdf`, `عربی پایه ${grade}`);
+      questionsDiv.appendChild(arabicBtn);
+    });
+  </script>
+</body>
+</html>
