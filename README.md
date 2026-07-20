@@ -3,7 +3,7 @@
 
 ---
 
-## 🇬🇧 English
+## EN English
 
 A web-based management system for language institutes developed using PHP and MySQL.
 
