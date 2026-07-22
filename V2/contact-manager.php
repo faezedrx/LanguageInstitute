@@ -32,10 +32,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             // تنظیمات SMTP سایت
             $mail->isSMTP();
-            $mail->Host       = 'mail.kishnovinedu.ir';
+            $mail->Host       = '';
             $mail->SMTPAuth   = true;
-            $mail->Username   = 'info@kishnovinedu.ir';
-            $mail->Password   = 'bfHJC]6qx[um';    
+            $mail->Username   = '';
+            $mail->Password   = '';    
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; 
             $mail->Port       = 465;
 
