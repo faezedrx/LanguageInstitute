@@ -40,8 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mail->Port       = 465;
 
             // مشخصات ایمیل
-            $mail->setFrom('info@kishnovinedu.ir', 'سیستم آموزش');
-            $mail->addAddress('behniya1394@gmail.com', 'مدیر آموزش');
+            $mail->setFrom('', 'سیستم آموزش');
+            $mail->addAddress('', 'مدیر آموزش');
             $mail->addReplyTo($email, $name);
 
             $mail->isHTML(true);
