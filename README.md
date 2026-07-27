@@ -1,3 +1,5 @@
+![poster](poster.png) 
+
 # Language Institute Management System
 # سیستم مدیریت آموزشگاه زبان
 
